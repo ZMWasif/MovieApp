@@ -41,6 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.movieapp.navigation.MovieNavigation
 import com.example.movieapp.ui.theme.MovieAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -48,24 +49,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 MyApp {
-    MainContent()
+    MovieNavigation()
 }
         }
     }
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyApp(content: @Composable () ->Unit){
     MovieAppTheme {
-        Scaffold(topBar = {
-              TopAppBar(title = { Text(text = "Movies")},
-              Modifier.background(color = MaterialTheme.colorScheme.primary));Modifier
-
-        }) {
-            content()
-        }
+content()
 
     }
 }
@@ -73,33 +67,7 @@ fun MyApp(content: @Composable () ->Unit){
 
 
 
-@Composable
-fun MainContent(movieList: List<String> = listOf(
-    "Avatar",
-    "300",
-    "Harry Potter",
-    "Avengers",
-    "Friends",
-    "Hangover",
-    "The Dark Knight",
-    "Mission Impossible",
-    "Inception"
-)){
-Column(modifier = Modifier
-    .padding(16.dp)
-    .padding(top = 50.dp)) {
-    LazyColumn {
-        items(items = movieList){
-            MovieRow(movie = it){
-                movie ->
-                Log.d(TAG, "MainContent: $movie")
-            }
 
-        }
-    }
-}
-
-}
 
 @Composable
 fun MovieRow(movie: String,onItemClick: (String) ->Unit={}){
@@ -108,7 +76,7 @@ fun MovieRow(movie: String,onItemClick: (String) ->Unit={}){
         .fillMaxWidth()
         .height(130.dp)
         .clickable {
-onItemClick(movie)
+            onItemClick(movie)
         },
         shape = RoundedCornerShape(corner = CornerSize(16.dp))
 
@@ -135,6 +103,6 @@ Icon(imageVector = Icons.Default.AccountBox, contentDescription = "Movie Image")
 @Composable
 fun GreetingPreview() {
    MyApp {
-       MainContent()
+       MovieNavigation()
    }
 }
